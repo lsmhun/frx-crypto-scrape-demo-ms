@@ -1,2 +1,2 @@
-# frx-crypto-scrape-demo-ms
-Demo microservice with forex data 
+# Helm chart frx-crypto-scrape-demo-ms
+Demo microservice with crypto forex data 

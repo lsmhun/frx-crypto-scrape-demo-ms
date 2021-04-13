@@ -1,0 +1,35 @@
+# Default values for frx-crypto-scrape-demo-ms.
+
+global:
+  postgresql:
+    postgresqlDatabase: "forex"
+    postgresqlUsername: "admin"
+    postgresqlPassword: "admin"
+    servicePort: 5432
+
+grafana:
+  enabled: true
+  admin:
+    password: "admin"
+
+kafka-connect-wrapper:
+  connectConfig:
+    topics: "forex"
+    logLevel: "INFO"
+    worker:
+      bootstrap: "frx-kafka:9092"
+      keyConverter: "org.apache.kafka.connect.storage.StringConverter"
+      valueConverter: "org.apache.kafka.connect.json.JsonConverter"
+      valueConverterSchemasEnable: true
+    source:
+      enabled: false
+    sink:
+      enabled: true
+      connectorClass: "io.confluent.connect.jdbc.JdbcSinkConnector"
+      connectionUrl: "jdbc:postgresql://frx-postgresql:5432/forex"
+      connectionUser: "admin"
+      connectionPassword: "admin"
+      keyConverter: "org.apache.kafka.connect.storage.StringConverter"
+      valueConverter: "org.apache.kafka.connect.json.JsonConverter"
+      valueConverterSchemasEnable: true
+
