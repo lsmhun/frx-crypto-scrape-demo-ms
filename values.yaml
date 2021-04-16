@@ -33,3 +33,58 @@ kafka-connect-wrapper:
       valueConverter: "org.apache.kafka.connect.json.JsonConverter"
       valueConverterSchemasEnable: true
 
+jobs:
+  - name: btc-scrape
+    image:
+      repository: lsmaster/kafka-connect-wrapper
+      tag: 6.1.0-0.1
+      imagePullPolicy: IfNotPresent
+    schedule: "* * * * *"
+    command: ["/bin/bash"]
+    args:
+      - "-c"
+      - "/opt/script/crypto-scrape.sh"
+      - "BTC"
+      - "USD,EUR"
+    failedJobsHistoryLimit: 1
+    successfulJobsHistoryLimit: 2
+    concurrencyPolicy: Allow
+    restartPolicy: OnFailure
+    volumes:
+      - name: script-mount
+        configMap:
+          name: script-configmap
+          defaultMode: 0777
+          items:
+            - key: crypto-scrape.sh
+              path: crypto-scrape.sh
+    volumeMounts:
+      - name: script-mount
+        mountPath: /opt/script
+  - name: eth-scrape
+    image:
+      repository: lsmaster/kafka-connect-wrapper
+      tag: 6.1.0-0.1
+      imagePullPolicy: IfNotPresent
+    schedule: "* * * * *"
+    command: ["/bin/bash"]
+    args:
+      - "-c"
+      - "/opt/script/crypto-scrape.sh"
+      - "ETH"
+      - "USD,EUR"
+    failedJobsHistoryLimit: 1
+    successfulJobsHistoryLimit: 2
+    concurrencyPolicy: Allow
+    restartPolicy: OnFailure
+    volumes:
+      - name: script-mount
+        configMap:
+          name: script-configmap
+          defaultMode: 0777
+          items:
+            - key: crypto-scrape.sh
+              path: crypto-scrape.sh
+    volumeMounts:
+      - name: script-mount
+        mountPath: /opt/script

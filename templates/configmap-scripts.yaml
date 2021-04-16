@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: script-configmap
+data:
+  crypto-scrape.sh: |-
+{{ .Files.Get "script/crypto-scrape.sh" | indent 4 }}
