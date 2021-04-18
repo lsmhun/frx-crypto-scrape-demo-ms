@@ -39,6 +39,7 @@ do
   done
   echo $XCURR $PRICE
   MESSAGE_TEMPLATE="{\"schema\":{\"type\":\"struct\",\"fields\":[{\"field\":\"timestamp\",\"optional\":false,\"type\":\"int64\"},{\"field\":\"curr\",\"optional\":false,\"type\":\"string\"},{\"field\":\"xcurr\",\"optional\":false,\"type\":\"string\"},{\"field\":\"price\",\"optional\":false,\"type\":\"double\"}],\"optional\":false,\"name\":\"forex\"},\"payload\":{\"timestamp\":$CURRENT_TS,\"curr\":\"$CURR\",\"xcurr\":\"$XCURR\",\"price\":$PRICE}}"
-  echo $MESSAGE_TEMPLATE | /opt/bin/kafka-console-producer.sh --broker-list $KAFKA_BOOTSTRAP --topic $KAFKA_TOPIC
-  
+  if [ "$PRICE" != "0.0" ]; then
+    echo $MESSAGE_TEMPLATE | /opt/bin/kafka-console-producer.sh --broker-list $KAFKA_BOOTSTRAP --topic $KAFKA_TOPIC
+  fi
 done
