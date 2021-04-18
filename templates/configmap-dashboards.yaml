@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dashboards-configmap
+data:
+  CRYPTO-2PANEL.json: |-
+{{ .Files.Get "dashboard/CRYPTO-2PANEL.json" | indent 4 }}

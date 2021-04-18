@@ -11,6 +11,14 @@ grafana:
   enabled: true
   admin:
     password: "admin"
+  dashboardsProvider:
+    enabled: true
+    configMapName:
+  dashboardsConfigMaps: 
+    - configMapName: dashboards-configmap
+      fileName: "CRYPTO-2PANEL.json"
+  datasources:
+    secretName: grafana-datasource-secret
 
 kafka-connect-wrapper:
   connectConfig:
@@ -43,9 +51,7 @@ jobs:
     command: ["/bin/bash"]
     args:
       - "-c"
-      - "/opt/script/crypto-scrape.sh"
-      - "BTC"
-      - "USD,EUR"
+      - "/opt/script/crypto-scrape.sh BTC USD,EUR"
     failedJobsHistoryLimit: 1
     successfulJobsHistoryLimit: 2
     concurrencyPolicy: Allow
@@ -70,9 +76,7 @@ jobs:
     command: ["/bin/bash"]
     args:
       - "-c"
-      - "/opt/script/crypto-scrape.sh"
-      - "ETH"
-      - "USD,EUR"
+      - "/opt/script/crypto-scrape.sh ETH USD,EUR"
     failedJobsHistoryLimit: 1
     successfulJobsHistoryLimit: 2
     concurrencyPolicy: Allow
