@@ -1,1 +1,13 @@
 Crypto Forex demo app
+=====================
+{{- if .Values.ingress.enabled }}
+{{- range $host := .Values.ingress.hosts }}
+  {{- range .paths }}
+  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host.host }}{{ .path }}
+  {{- end }}
+{{- end }}
+{{- else if contains "NodePort" .Values.service.type }}
+Exposing Grafana NodePort:
+  kubectl expose deployment frx --type=NodePort --name=frxgraf --namespace {{ .Release.Namespace }}
+  kubectl describe service frxgraf --namespace {{ .Release.Namespace }} | grep NodePort: 
+{{- end }}

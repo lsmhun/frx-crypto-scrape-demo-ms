@@ -7,6 +7,12 @@ global:
     postgresqlPassword: "admin"
     servicePort: 5432
 
+service:
+  type: "NodePort"
+
+ingress:
+  enabled: false
+
 grafana:
   enabled: true
   admin:
